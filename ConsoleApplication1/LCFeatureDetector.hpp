@@ -14,7 +14,9 @@ public:
 
     void detect();
 
-    void show();
+    void showSampleDetect();
+
+	void match(string testFilename);
 
 private:
     SurfFeatureDetector mSurfFeatureDectector;

@@ -530,7 +530,8 @@ void filter() {
 void suffDetect() {
 	LCFeatureDetector lcFeatureDetector = LCFeatureDetector("1.jpg", 400);
 	lcFeatureDetector.detect();
-	lcFeatureDetector.show();
+	//lcFeatureDetector.showSampleDetect();
+	lcFeatureDetector.match("2.jpg");
 
 	waitKey(0);
 }
@@ -545,7 +546,7 @@ void suffDetect() {
 
 int main(int argc, char** argv)
 {
-	markerlessAR();
+	//markerlessAR();
 
 	//TrackBarTest();
 
@@ -574,7 +575,7 @@ int main(int argc, char** argv)
 
 	//filter();
 
-	//suffDetect();
+	suffDetect();
 
 	return 0;
 }
