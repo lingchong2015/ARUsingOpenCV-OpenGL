@@ -112,6 +112,7 @@ void processVideo(const Mat& patternImage, CameraCalibration& calibration) {
 	Mat currentFrame;
 	capture >> currentFrame;
 
+	// 如果在调试中无法打开摄像头，在这一步先下一个断点，调试一次，就可以打开摄像头了，具体原因不清楚。
 	if (currentFrame.empty())
 	{
 		cout << "无法打开摄像头设备。" << endl;
@@ -528,10 +529,15 @@ void filter() {
 /************************************************************************/
 
 void suffDetect() {
+	int64 start = getTickCount();
+
 	LCFeatureDetector lcFeatureDetector = LCFeatureDetector("1.jpg", 400);
-	lcFeatureDetector.detect();
+	lcFeatureDetector.detectUsingSURF();
 	//lcFeatureDetector.showSampleDetect();
-	lcFeatureDetector.match("2.jpg");
+	//lcFeatureDetector.matchUsingBFMWithSURF("2.jpg");
+	lcFeatureDetector.matchUsingFLANNWithSURF("2.jpg");
+
+	cout << "Time elapse: " << getTickFrequency() / (getTickCount() - start) << "fps." << endl;
 
 	waitKey(0);
 }
@@ -546,7 +552,7 @@ void suffDetect() {
 
 int main(int argc, char** argv)
 {
-	//markerlessAR();
+	markerlessAR();
 
 	//TrackBarTest();
 
@@ -575,7 +581,7 @@ int main(int argc, char** argv)
 
 	//filter();
 
-	suffDetect();
+	//suffDetect();
 
 	return 0;
 }

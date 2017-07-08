@@ -1,5 +1,5 @@
-#ifndef SURFDETECTOR_HPP
-#define SURFDETECTOR_HPP
+#ifndef LCFEATUREDETECTOR_HPP
+#define LCFEATUREDETECTOR_HPP
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/nonfree/features2d.hpp>
@@ -10,20 +10,29 @@ using namespace cv;
 class LCFeatureDetector {
 
 public:
+	
     LCFeatureDetector(string filename, int minHessian);
 
-    void detect();
+    void detectUsingSURF();
 
-    void showSampleDetect();
+    void showTrainSample();
 
-	void match(string testFilename);
+	void matchUsingBFMWithSURF(string testFilename);
+
+	void LCFeatureDetector::matchUsingFLANNWithSURF(string queryFileNmae);
 
 private:
     SurfFeatureDetector mSurfFeatureDectector;
 
-    Mat mImg;
+    Mat mTrainImg;
 
-    vector<KeyPoint> mKeyPoints;
+    vector<KeyPoint> mKeyPointsTrain;
+
+	vector<KeyPoint> getQueryKeyPoints(string queryFilename, Mat& queryImg);
+
+	Mat getDescriptorUsingSURF(const Mat& img, vector<KeyPoint> keyPoints);
+
+	void drawMatchsOnWindow(const Mat& queryImg, const vector<KeyPoint>& keyPointsQuery, const vector<DMatch>& matches, string windowName);
 };
 
-#endif // SURFDETECTOR_HPP
+#endif // LCFEATUREDETECTOR_HPP
